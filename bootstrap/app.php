@@ -14,6 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         //
+
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->render(fn(Throwable $e, Request $request) => CustomExceptionHandler::create($e, $request));

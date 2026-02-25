@@ -7,8 +7,14 @@ use App\Http\Controllers\v1\product\SoftDeleteProductController;
 use App\Http\Controllers\v1\product\UpdateProductController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', ListProductsController::class)->name('list');
-Route::get('/{id}', GetProductController::class)->name('show');
-Route::post('/', CreateProductController::class)->name('create');
-Route::put('/{id}', UpdateProductController::class)->name('update');
-Route::delete('/{id}', SoftDeleteProductController::class)->name('soft.delete');
+Route::middleware('throttle:api-reading')->group(function () {
+    Route::get('/', ListProductsController::class)->name('list');
+    Route::get('/{id}', GetProductController::class)->name('show');
+});
+
+
+Route::middleware('throttle:api-writing')->group(function () {
+    Route::post('/', CreateProductController::class)->name('create');
+    Route::put('/{id}', UpdateProductController::class)->name('update');
+    Route::delete('/{id}', SoftDeleteProductController::class)->name('soft.delete');
+});
