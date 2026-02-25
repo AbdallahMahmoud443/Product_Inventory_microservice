@@ -15,7 +15,6 @@ class ErrorResponse implements Responsable
         private int $instance,
         private string $code,
         private string $link,
-        private string $status,
         private int $statusCode = Response::HTTP_INTERNAL_SERVER_ERROR
     ) {}
     /**
@@ -32,7 +31,7 @@ class ErrorResponse implements Responsable
             'instance' => $this->instance,
             'code' => $this->code,
             'link' => $this->link,
-            'status' => $this->status,
+            'status' => $this->statusCode,
         ], $this->statusCode);
     }
 }
