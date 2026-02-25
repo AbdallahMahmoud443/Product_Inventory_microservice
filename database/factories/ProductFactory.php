@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\ProductStatus;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -25,7 +26,7 @@ class ProductFactory extends Factory
             'price' => $this->faker->randomFloat(2, 10, 1000),
             'stock_quantity' => $this->faker->randomFloat(2, 0, 1000),
             'low_stock_threshold' => $this->faker->numberBetween(5, 50),
-            'status' => $this->faker->randomElement(['active', 'inactive', 'discontinued'])
+            'status' => $this->faker->randomElement([ProductStatus::ACTIVE, ProductStatus::INACTIVE, ProductStatus::DISCONTINUED])
         ];
     }
 }
