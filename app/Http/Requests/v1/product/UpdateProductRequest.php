@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\v1\product;
 
-use App\Enums\ProductStatus;
+use App\Enums\ProductStatusEnums;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -29,7 +29,7 @@ class UpdateProductRequest extends FormRequest
             'price' => ['sometimes', 'required', 'numeric', 'min:0', 'max:999999.99'],
             'stock_quantity' => ['sometimes', 'required', 'numeric', 'min:0', 'max:999999.99'],
             'low_stock_threshold' => ['sometimes', 'integer', 'min:0'],
-            'status' => ['sometimes', 'required', Rule::in([ProductStatus::ACTIVE, ProductStatus::INACTIVE, ProductStatus::DISCONTINUED])],
+            'status' => ['sometimes', 'required', Rule::in(ProductStatusEnums::values())],
         ];
     }
     /**

@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, HasUuids;
 
     /**
      * The attributes that are mass assignable.
@@ -24,7 +25,7 @@ class Product extends Model
         'low_stock_threshold',
         'status',
     ];
-    
+
     /**
      * Get the attributes that should be cast.
      *
