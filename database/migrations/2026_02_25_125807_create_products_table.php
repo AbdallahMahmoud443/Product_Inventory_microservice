@@ -22,6 +22,7 @@ return new class extends Migration
             $table->enum('status', ['active', 'inactive', 'discontinued'])->default('active');
             $table->softDeletes();
             $table->timestamps();
+            $table->index(['sku', 'name', 'status']);
         });
     }
 
