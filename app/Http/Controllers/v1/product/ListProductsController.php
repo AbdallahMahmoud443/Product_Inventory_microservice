@@ -6,14 +6,14 @@ use App\Http\Controllers\Controller;
 
 use App\Http\Resources\v1\product\ProductsResource;
 use App\services\v1\product\ProductService;
-use Illuminate\Http\Request;
+
 
 class ListProductsController extends Controller
 {
     /**
      * Handle the incoming request.
      */
-    public function __invoke(ProductService $productService, Request $request)
+    public function __invoke(ProductService $productService)
     {
         $productions = $productService->fetchProducts();
 
