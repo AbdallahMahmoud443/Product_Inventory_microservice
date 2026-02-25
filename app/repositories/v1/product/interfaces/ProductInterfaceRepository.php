@@ -1,15 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\repositories\v1\product\interfaces;
 
 interface ProductInterfaceRepository
 {
     /**
      * Get all products from the database.(For Repo Scope)
-     * @param int $perPage The number of product per Page
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function getProducts(int $perPage);
+    public function getProducts();
     /**
      * Get a specific product by its ID.(For Repo Scope)
      *

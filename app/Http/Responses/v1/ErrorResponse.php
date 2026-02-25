@@ -11,8 +11,8 @@ class ErrorResponse implements Responsable
 
     function __construct(
         private string $title,
-        private string $detail,
-        private int $instance,
+        private string|array $detail,
+        private string $instance,
         private string $code,
         private string $link,
         private int $statusCode = Response::HTTP_INTERNAL_SERVER_ERROR

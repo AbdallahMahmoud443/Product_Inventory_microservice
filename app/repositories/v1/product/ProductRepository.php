@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\repositories\v1\product;
 
 use App\Models\Product;
@@ -10,9 +12,9 @@ class ProductRepository implements ProductInterfaceRepository
 
     public function __construct(public Product $product) {}
 
-    public function getProducts(int $perPage = 10)
+    public function getProducts()
     {
-        return $this->product->query()->simplePaginate($perPage);
+        return $this->product->query()->Paginate(10);
     }
 
     public function getProductById(string $id)
@@ -20,18 +22,15 @@ class ProductRepository implements ProductInterfaceRepository
         return $this->product->query()->findOrFail($id);
     }
 
-
     public function createProduct($data)
     {
         return $this->product->query()->create($data);
     }
 
-
     public function updateProduct(string $id, $data)
     {
         return $this->product->query()->where('id', $id)->update($data);
     }
-
 
     public function deleteProduct(string $id)
     {

@@ -1,15 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\services\v1\product\interfaces;
 
 interface ProductInterfaceService
 {
     /**
      * Fetch all products from the database.(For Service Scope)
-     * @param int $perPage The number of product per Page
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function fetchProducts(int $perPage);
+    public function fetchProducts();
     /**
      * Fetch a specific product by its ID.(For Service Scope)
      *
