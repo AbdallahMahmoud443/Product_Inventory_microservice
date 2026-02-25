@@ -25,7 +25,7 @@ class ProductFactory extends Factory
             'name' => $this->faker->words(3, true),
             'description' => $this->faker->sentence(),
             'price' => $this->faker->randomFloat(2, 10, 1000),
-            'stock_quantity' => $this->faker->randomFloat(2, 0, 1000),
+            'stock_quantity' => $this->faker->numberBetween(10, 1000),
             'low_stock_threshold' => $this->faker->numberBetween(5, 50),
             'status' => $this->faker->randomElement(ProductStatusEnums::values()),
         ];
