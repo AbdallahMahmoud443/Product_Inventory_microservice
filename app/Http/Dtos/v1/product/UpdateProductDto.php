@@ -10,7 +10,6 @@ readonly class UpdateProductDto
         public ?string $sku,
         public ?string $description,
         public ?float $price,
-        public ?float $stock_quantity,
         public ?int $low_stock_threshold,
         public ?string $status,
     ) {}
@@ -22,7 +21,6 @@ readonly class UpdateProductDto
             $data['sku'] ?? null,
             $data['description'] ?? null,
             isset($data['price']) ? (float) $data['price'] : null,
-            isset($data['stock_quantity']) ? (float) $data['stock_quantity'] : null,
             isset($data['low_stock_threshold']) ? (int) $data['low_stock_threshold'] : null,
             $data['status'] ?? null,
         );
@@ -35,7 +33,6 @@ readonly class UpdateProductDto
             'sku' => $this->sku,
             'description' => $this->description,
             'price' => $this->price,
-            'stock_quantity' => $this->stock_quantity,
             'low_stock_threshold' => $this->low_stock_threshold,
             'status' => $this->status,
         ], function ($value) {

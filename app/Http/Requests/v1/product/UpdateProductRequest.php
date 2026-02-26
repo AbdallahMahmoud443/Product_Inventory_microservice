@@ -28,7 +28,6 @@ class UpdateProductRequest extends FormRequest
             'sku' => ['sometimes', 'required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
             'price' => ['sometimes', 'required', 'numeric', 'min:0', 'max:999999.99'],
-            'stock_quantity' => ['sometimes', 'required', 'numeric', 'min:0', 'max:999999.99'],
             'low_stock_threshold' => ['sometimes', 'integer', 'min:0'],
             'status' => ['sometimes', 'required', Rule::in(ProductStatusEnums::values())],
         ];
@@ -46,9 +45,6 @@ class UpdateProductRequest extends FormRequest
             'price.min' => 'Price cannot be negative',
             'sku.required' => 'SKU is required',
             'sku.unique' => 'SKU already exists',
-            'stock_quantity.required' => 'Stock quantity is required',
-            'stock_quantity.numeric' => 'Stock quantity must be a number',
-            'stock_quantity.min' => 'Stock quantity cannot be negative',
             'status.required' => 'Status is required',
             'status.in' => 'Invalid status value',
         ];
