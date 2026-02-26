@@ -11,7 +11,7 @@ class UpdateProductTest extends TestCase
     {
         $product = Product::factory()->create();
         $response = $this->putJson(
-            'http://127.0.0.1:8000/api/v1/products/' . $product->id,
+            '/api/v1/products/' . $product->id,
             [
                 "sku" => "PRD-001",
                 "name" => "Sample Product",
@@ -31,7 +31,7 @@ class UpdateProductTest extends TestCase
         ]);
         $product2 = Product::factory()->create();
         $response = $this->putJson(
-            'http://127.0.0.1:8000/api/v1/products/' .  $product2->id,
+            '/api/v1/products/' .  $product2->id,
             [
                 "sku" => "PRD-001",
             ]
@@ -51,7 +51,7 @@ class UpdateProductTest extends TestCase
     {
         $product2 = Product::factory()->create();
         $response = $this->putJson(
-            'http://127.0.0.1:8000/api/v1/products/' . $product2->id,
+            '/api/v1/products/' . $product2->id,
             [
                 "sku" => "PRD-001",
                 "name" => "Sample Product",

@@ -10,7 +10,7 @@ class CreateProductTest extends TestCase
 {
     public function testCreateProductWithEmptyPayload()
     {
-        $response = $this->postJson('http://127.0.0.1:8000/api/v1/products/', []);
+        $response = $this->postJson('/api/v1/products/', []);
         $response->assertStatus(422)
             ->assertJsonFragment([
                 "title" => "Validation failed",
@@ -36,7 +36,7 @@ class CreateProductTest extends TestCase
     public function testCreateProductWithInvalidPayload()
     {
         $response = $this->postJson(
-            'http://127.0.0.1:8000/api/v1/products/',
+            '/api/v1/products/',
             [
                 "sku" => "PRD-001",
                 "name" => "Sample Product",
@@ -68,7 +68,7 @@ class CreateProductTest extends TestCase
             "sku" => "PRD-001"
         ]);
         $response = $this->postJson(
-            'http://127.0.0.1:8000/api/v1/products/',
+            '/api/v1/products/',
             [
                 "sku" => "PRD-001",
                 "name" => "Sample Product",
@@ -93,7 +93,7 @@ class CreateProductTest extends TestCase
     public function testCreateProductWithValidPayload()
     {
         $response = $this->postJson(
-            'http://127.0.0.1:8000/api/v1/products/',
+            '/api/v1/products/',
             [
                 "sku" => "PRD-001",
                 "name" => "Sample Product",
