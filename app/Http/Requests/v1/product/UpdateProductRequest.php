@@ -8,6 +8,7 @@ use Illuminate\Validation\Rule;
 
 class UpdateProductRequest extends FormRequest
 {
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -23,9 +24,10 @@ class UpdateProductRequest extends FormRequest
      */
     public function rules(): array
     {
+        $id = $this->route('id');
         return [
             'name' => ['sometimes', 'required', 'string', 'max:255'],
-            'sku' => ['sometimes', 'required', 'string', 'max:255'],
+            'sku' => ['sometimes', 'required', 'string', 'max:255', 'unique:products,sku,' .  $id],
             'description' => ['nullable', 'string'],
             'price' => ['sometimes', 'required', 'numeric', 'min:0', 'max:999999.99'],
             'low_stock_threshold' => ['sometimes', 'integer', 'min:0'],
