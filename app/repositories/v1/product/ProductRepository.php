@@ -8,7 +8,6 @@ use App\Http\Dtos\v1\product\CreateProductDto;
 use App\Http\Dtos\v1\product\UpdateProductDto;
 use App\Models\Product;
 use App\repositories\v1\product\interfaces\ProductInterfaceRepository;
-
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class ProductRepository implements ProductInterfaceRepository
