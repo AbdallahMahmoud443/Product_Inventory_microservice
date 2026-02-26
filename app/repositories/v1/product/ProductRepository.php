@@ -40,7 +40,7 @@ class ProductRepository implements ProductInterfaceRepository
 
     public function deleteProduct(string $id): bool
     {
-
-        return $this->product->query()->where('id', $id)->delete();
+        $product = $this->getProductById($id);
+        return  $product->delete();
     }
 }
