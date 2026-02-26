@@ -9,8 +9,4 @@ Route::prefix('v1')->as('v1.')->group(static  function () {
         require base_path('routes/api/v1/stock.php');
         require base_path('routes/api/v1/product.php');
     });
-    Route::get('/cache', function () {
-
-        return  Cache::tags('products')->flush();
-    });
 });
