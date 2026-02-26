@@ -17,7 +17,10 @@ class ProductService implements ProductInterfaceService
     function __construct(private readonly ProductInterfaceRepository $productRepository) {}
     public function fetchProducts(): LengthAwarePaginator
     {
-        $products = Cache::remember("products", 60 * 60, function () {
+        $page = request('page', 1);
+        $perPage = 15;
+        $cacheKey = "products:page={$page}:perPage={$perPage}";
+        $products = Cache::tags(['products'])->remember($cacheKey, 60 * 60, function () {
             return $this->productRepository->getProducts();
         });
         return $products;
@@ -30,25 +33,19 @@ class ProductService implements ProductInterfaceService
 
     public function storeProduct(CreateProductDto $payload): Product
     {
-        if (Cache::has("products")) {
-            Cache::forget("products");
-        }
+        Cache::tags(['products'])->flush();
         return $this->productRepository->createProduct(data: $payload);
     }
 
     public function editProduct(string $id, UpdateProductDto $payload): Product
     {
-        if (Cache::has("products")) {
-            Cache::forget("products");
-        }
+        Cache::tags(['products'])->flush();
         return $this->productRepository->updateProduct(id: $id, data: $payload);
     }
 
     public function removeProduct(string $id): bool
     {
-        if (Cache::has("products")) {
-            Cache::forget("products");
-        }
+        Cache::tags(['products'])->flush();
         return $this->productRepository->deleteProduct(id: $id);
     }
 }
