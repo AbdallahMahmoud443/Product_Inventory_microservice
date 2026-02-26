@@ -86,6 +86,7 @@ The `app/` directory follows a clean, layered architecture:
 The project includes a full suite of feature tests to ensure API reliability:
 - **Products:** `CreateProductTest`, `GetProductTest`, `UpdateProductTest`, `DeleteProductTest`.
 - **Stock:** `StockTest` (covers stock adjustment and threshold alerts).
+- **Continuous Integration:**  (Automated Test Cases Using Github Actions).
 
 Run tests inside the container:
 ```bash
