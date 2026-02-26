@@ -4,36 +4,43 @@ declare(strict_types=1);
 
 namespace App\repositories\v1\product;
 
+use App\Http\Dtos\v1\product\CreateProductDto;
+use App\Http\Dtos\v1\product\UpdateProductDto;
 use App\Models\Product;
 use App\repositories\v1\product\interfaces\ProductInterfaceRepository;
+
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class ProductRepository implements ProductInterfaceRepository
 {
 
     public function __construct(public Product $product) {}
 
-    public function getProducts()
+    public function getProducts(): LengthAwarePaginator
     {
         return $this->product->query()->Paginate(10);
     }
 
-    public function getProductById(string $id)
+    public function getProductById(string $id): Product
     {
         return $this->product->query()->findOrFail($id);
     }
 
-    public function createProduct($data)
+    public function createProduct(CreateProductDto $data): Product
     {
-        return $this->product->query()->create($data);
+        return $this->product->query()->create($data->toArray());
     }
 
-    public function updateProduct(string $id, $data)
+    public function updateProduct(string $id, UpdateProductDto $data): Product
     {
-        return $this->product->query()->where('id', $id)->update($data);
+        $product = $this->getProductById($id);
+        $product->update($data->toArray());
+        return $product;
     }
 
-    public function deleteProduct(string $id)
+    public function deleteProduct(string $id): bool
     {
+
         return $this->product->query()->where('id', $id)->delete();
     }
 }

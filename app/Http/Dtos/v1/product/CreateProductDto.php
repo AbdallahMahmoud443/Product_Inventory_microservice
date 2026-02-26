@@ -3,33 +3,35 @@
 namespace App\Http\Dtos\v1\product;
 
 
-readonly class CreateProductDto
+class CreateProductDto
 {
-    public string $sku;
-    public string $name;
-    public ?string $description;
-    public float $price;
-    public float $stock_quantity;
-    public int $low_stock_threshold;
-    public string $status;
 
+    public function __construct(
+        public string $sku,
+        public string $name,
+        public ?string $description,
+        public float $price,
+        public float $stock_quantity,
+        public int $low_stock_threshold,
+        public string $status,
+    ) {}
     public static function fromRequest(array $data): self
     {
-        return new self([
-            'sku' => $data['sku'],
-            'name' => $data['name'],
-            'description' => $data['description'] ?? null,
-            'price' => (float) $data['price'],
-            'stock_quantity' => (float) $data['stock_quantity'],
-            'low_stock_threshold' => (int) ($data['low_stock_threshold'] ?? 10),
-            'status' => $data['status'] ?? 'active',
-        ]);
+        return new self(
+            $data['sku'],
+            $data['name'],
+            $data['description'] ?? null,
+            (float) $data['price'],
+            (float) $data['stock_quantity'],
+            (int) ($data['low_stock_threshold'] ?? 10),
+            $data['status'] ?? 'active',
+        );
     }
     public function toArray(): array
     {
         return [
-            'name' => $this->name,
             'sku' => $this->sku,
+            'name' => $this->name,
             'description' => $this->description,
             'price' => $this->price,
             'stock_quantity' => $this->stock_quantity,

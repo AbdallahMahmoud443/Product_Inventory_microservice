@@ -25,6 +25,7 @@ class UpdateProductRequest extends FormRequest
     {
         return [
             'name' => ['sometimes', 'required', 'string', 'max:255'],
+            'sku' => ['sometimes', 'required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
             'price' => ['sometimes', 'required', 'numeric', 'min:0', 'max:999999.99'],
             'stock_quantity' => ['sometimes', 'required', 'numeric', 'min:0', 'max:999999.99'],
@@ -43,6 +44,8 @@ class UpdateProductRequest extends FormRequest
             'price.required' => 'Price is required',
             'price.numeric' => 'Price must be a number',
             'price.min' => 'Price cannot be negative',
+            'sku.required' => 'SKU is required',
+            'sku.unique' => 'SKU already exists',
             'stock_quantity.required' => 'Stock quantity is required',
             'stock_quantity.numeric' => 'Stock quantity must be a number',
             'stock_quantity.min' => 'Stock quantity cannot be negative',
