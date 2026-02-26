@@ -20,12 +20,19 @@ class ProductService implements ProductInterfaceService
     public function fetchProducts(): LengthAwarePaginator
     {
         $page = request('page', 1);
-        $perPage = 15;
+        $requestedPerPage = (int) request('per_page', 15);
+        $allowedPerPage = config('pagination.allowed_per_page');
+        $perPage = in_array($requestedPerPage, $allowedPerPage)
+            ? $requestedPerPage
+            : config('pagination.default_per_page');
+
         $cacheKey = "products:page={$page}:perPage={$perPage}";
         $products = Cache::tags(['products'])->remember(
             $cacheKey,
-            60 * 15,
+            now()->addMinutes(10),
             function () {
+                Log::info('Fetching products from database');
+                return $this->productRepository->getProducts();
                 return Product::orderBy('created_at', 'desc')->paginate(15);
             }
         );
