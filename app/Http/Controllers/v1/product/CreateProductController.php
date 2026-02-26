@@ -6,7 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Dtos\v1\product\CreateProductDto;
 use App\Http\Requests\v1\product\CreateProductRequest;
 use App\Http\Responses\v1\MessageResponse;
-use App\services\v1\product\ProductService;
+use App\services\v1\product\interfaces\ProductInterfaceService;
+
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -15,7 +16,7 @@ class CreateProductController extends Controller
     /**
      * Handle the incoming request.
      */
-    public function __invoke(CreateProductRequest $request, ProductService $productService)
+    public function __invoke(CreateProductRequest $request, ProductInterfaceService $productService)
     {
         $createProductDto = CreateProductDto::fromRequest($request->validated());
         $newProduct = $productService->storeProduct($createProductDto);
