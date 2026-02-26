@@ -14,7 +14,7 @@ class StockRepository implements StockInterfaceRepository
     public function adjustStockQuantity(int $adjustment, Product $product): Product
     {
         return  DB::transaction(function () use ($product, $adjustment) {
-            $product->lockForUpdate()->firstOrFail();
+            $product->lockForUpdate();
             $product->stock_quantity = $adjustment;
             $product->save();
             return $product;

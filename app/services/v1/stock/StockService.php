@@ -2,6 +2,7 @@
 
 namespace App\services\v1\stock;
 
+use App\Events\v1\stock\ProductWithLowThresholdEvent;
 use App\Models\Product;
 use App\repositories\v1\product\interfaces\ProductInterfaceRepository;
 use App\repositories\v1\stock\interfaces\StockInterfaceRepository;
@@ -21,7 +22,7 @@ class StockService implements StockInterfaceService
         if ($stock_quantity <= 0 && $adjustment <= 0) {
             throw new Exception('stock quantity is not available');
         } else if ($adjustment  > 0) {
-            $adjustment += $adjustment + $product->stock_quantity;
+            $adjustment = $adjustment + $product->stock_quantity;
         } elseif ($adjustment  < 0 && abs($adjustment) <= $stock_quantity) {
             $adjustment = $product->stock_quantity - abs($adjustment);
         } elseif ($adjustment  < 0 && abs($adjustment) > $stock_quantity) {
@@ -29,7 +30,11 @@ class StockService implements StockInterfaceService
         } else {
             throw new Exception('stock quantity is not available');
         }
-        return  $this->StockRepo->adjustStockQuantity($adjustment, $product);
+        $newProduct = $this->StockRepo->adjustStockQuantity($adjustment, $product);
+        if ($newProduct->low_stock_threshold > $newProduct->stock_quantity) {
+            event(new ProductWithLowThresholdEvent($newProduct));
+        }
+        return $newProduct;
     }
 
     public function fetchProductWithQuantityLowThreshold(): LengthAwarePaginator
