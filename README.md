@@ -11,13 +11,15 @@ A robust and scalable Laravel-based microservice for managing product inventory,
 - **URL:** [http://localhost:8000/docs](http://localhost:8000/docs)
 - **Built with:** [Scramble](https://scramble.dedoc.co/) for automatic OpenAPI documentation.
 
-<img src="C:\laragon\www\Product_Inventory_microservice\images\Api Documentation.PNG" style="zoom:50%;" />
+<img width="1920" height="1048" alt="image" src="https://github.com/user-attachments/assets/39426604-e155-4dc1-9a46-b04e17b36894" />
+
 
 ------
 
 ## 🐳  API Documentation
 
-<img src="C:\laragon\www\Product_Inventory_microservice\images\Docker.PNG" style="zoom:50%;" />
+<img width="1906" height="929" alt="image" src="https://github.com/user-attachments/assets/6655fb9f-b22b-46a4-80e8-a5a3df44b83c" />
+
 
 ------
 
