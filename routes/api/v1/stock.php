@@ -9,5 +9,5 @@ Route::middleware('throttle:api-writing')->group(function () {
 });
 
 Route::middleware('throttle:api-reading')->group(function () {
-    Route::get('products/low-stock', ListProductWithThresholdController::class)->name('get.stock');
+    Route::get('/low-stock', ListProductWithThresholdController::class)->name('get.stock');
 });
