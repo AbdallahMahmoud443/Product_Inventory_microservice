@@ -1,59 +1,132 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Product Inventory Microservice
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A robust and scalable Laravel-based microservice for managing product inventory, featuring high-performance caching, database locking for stock integrity, and comprehensive testing.
 
-## About Laravel
+## 🛠 Project Architecture
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+<img src="C:\laragon\www\Product_Inventory_microservice\images\Capture.PNG" style="zoom: 80%;" />
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🚀 API Documentation
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **URL:** [http://localhost:8000/docs](http://localhost:8000/docs)
+- **Built with:** [Scramble](https://scramble.dedoc.co/) for automatic OpenAPI documentation.
 
-## Learning Laravel
+<img src="C:\laragon\www\Product_Inventory_microservice\images\Api Documentation.PNG" style="zoom:50%;" />
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+------
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## 🐳  API Documentation
 
-## Laravel Sponsors
+<img src="C:\laragon\www\Product_Inventory_microservice\images\Docker.PNG" style="zoom:50%;" />
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+------
 
-### Premium Partners
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
 
-## Contributing
+## 🏗 Folder Structure
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+The `app/` directory follows a clean, layered architecture:
+- **`Enums/`**: Static enumerations (e.g., product status).
+- **`Events/v1/`**: Event classes for inventory alerts.
+- **`Exceptions/`**: Custom exception handling.
+- **`Http/`**:
+    - **`Controllers/v1/`**: Versioned API controllers.
+    - **`Dtos/v1/`**: Data Transfer Objects for clean data handling.
+    - **`Requests/v1/`**: Request validation logic.
+    - **`Resources/v1/`**: API transformation layers.
+    - **`Responses/v1/`**: Standardized response formats.
+- **`Listeners/v1/`**: Logic executed in response to events.
+- **`Models/`**: Eloquent models (Product, User).
+- **`Observers/v1/`**: Model lifecycle event handlers.
+- **`Providers/`**: Service providers and container bindings.
+- **`repositories/v1/`**: Repository pattern for database abstraction.
+- **`services/v1/`**: Service layer for business logic.
+- **`database/migrations`**: Schema definitions.
+- **`tests/Feature`**: API and stock management feature tests.
 
-## Code of Conduct
+---
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## 🛠 Advanced Techniques
+### ⚡ Caching
+- **Implementation:** Uses **Redis** with Cache Tags (`products`).
+- **Benefit:** Optimized product listing by caching paginated results for 10 minutes, significantly reducing database load.
+- **Location:** [ProductService.php](app/services/v1/product/ProductService.php)
 
-## Security Vulnerabilities
+### 📄 Pagination
+- **Implementation:** Integrated into both Product and Stock repositories.
+- **Benefit:** Handles large datasets efficiently by serving 10 items per page (configurable).
+- **Location:** [ProductRepository.php](app/repositories/v1/product/ProductRepository.php)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 🔒 Pessimistic Locking
+- **Implementation:** Uses `DB::transaction` with `lockForUpdate()` during stock adjustments.
+- **Benefit:** Prevents race conditions (e.g., two concurrent sales trying to update the same product's stock simultaneously), ensuring data integrity.
+- **Location:** [StockRepository.php](app/repositories/v1/stock/StockRepository.php)
 
-## License
+---
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## 🛤 API Endpoints
+### Products
+- `GET /api/v1/product`: List all products (Cached & Paginated).
+- `GET /api/v1/product/{id}`: Fetch a specific product.
+- `POST /api/v1/product`: Create a new product.
+- `PUT /api/v1/product/{id}`: Update product details.
+- `DELETE /api/v1/product/{id}`: Soft delete a product.
+
+### Stock Management
+- `PUT /api/v1/stock/{id}/stock`: Adjust product stock quantity (Pessimistic Locking).
+- `GET /api/v1/stock/low-stock`: List products below their low-stock threshold (Paginated).
+
+---
+
+## 🧪 Testing
+
+The project includes a full suite of feature tests to ensure API reliability:
+- **Products:** `CreateProductTest`, `GetProductTest`, `UpdateProductTest`, `DeleteProductTest`.
+- **Stock:** `StockTest` (covers stock adjustment and threshold alerts).
+
+Run tests inside the container:
+```bash
+docker-compose exec inventory-app php artisan test
+```
+
+---
+
+## ⚙️ Installation & Setup
+Follow these steps to get the project running locally using **Docker Desktop**:
+
+1. **Clone the repository:**
+   ```bash
+   git clone <repository-url>
+   cd Product_Inventory_microservice
+   ```
+
+2. **Environment Setup:**
+   ```bash
+   cp .env.example .env
+   ```
+
+3. **Start Containers:**
+   
+   ```bash
+   docker-compose up -d --build
+   ```
+   
+4. **Install PHP Dependencies:**
+   ```bash
+   docker-compose exec inventory-app composer install
+   ```
+
+5. **Generate App Key:**
+   ```bash
+   docker-compose exec inventory-app php artisan key:generate
+   ```
+
+6. **Database Migration & Seeding:**
+   ```bash
+   docker-compose exec inventory-app php artisan migrate --seed
+   ```
+
+7. **Access the App:**
+   
+   - **Website:** [http://localhost:8000/api/v1/products/](http://localhost:8000/api/v1/products/)
+   - **API Docs:** [http://localhost:8000/docs](http://localhost:8000/docs)

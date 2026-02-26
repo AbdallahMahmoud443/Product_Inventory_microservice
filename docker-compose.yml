@@ -48,7 +48,7 @@ services:
   # Redis
   redis:
     image: redis:alpine
-    container_name: inventory-redis 
+    container_name: inventory-redis
     restart: unless-stopped
     ports:
       - "6379:6379"
